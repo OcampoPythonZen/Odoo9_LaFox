@@ -1,0 +1,273 @@
+<openerp>
+    <data>
+    	<!-- VISTA PARA IMPORTAR PRODUCTOS-->
+        <record model="ir.ui.view" id="view_attachment_asignar_productos_form">
+        	<field name="name">view.ir.attachment.asignar.productos.form</field>
+            <field name="model">ir.attachment</field>
+            <field name="inherit_id" ref="base.view_attachment_form"/>
+            <field name="priority" eval="17"/>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+              <form>
+                <data>
+                  <xpath expr="/form/sheet/group" position="after">
+                    <footer>
+                      <button name="asignar_products" string="Importar Productos" class="oe_highlight" type="object" />
+                    </footer>
+                  </xpath>
+                </data>
+              </form>
+            </field>
+          </record>
+
+          <record id="action_importar_productos_lafox" model="ir.actions.act_window">
+            <field name="name">Importar Productos</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">ir.attachment</field>
+            <field name="view_mode">form</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="view_attachment_asignar_productos_form"/>
+            <field name="context">{}</field>
+            <field name="target">new</field>
+            <field name="help">La Fox</field>
+          </record>
+
+          <!-- VISTA PARA IMPORTAR CLIENTES-->
+        <record model="ir.ui.view" id="view_attachment_asignar_partner_form">
+        	<field name="name">view.ir.attachment.asignar.parnter.form</field>
+            <field name="model">ir.attachment</field>
+            <field name="inherit_id" ref="base.view_attachment_form"/>
+            <field name="priority" eval="17"/>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+              <form>
+                <data>
+                  <xpath expr="/form/sheet/group" position="after">
+                    <footer>
+                      <button name="asignar_partner" string="Importar Clientes" class="oe_highlight" type="object" />
+                    </footer>
+                  </xpath>
+                </data>
+              </form>
+            </field>
+          </record>
+
+          <record id="action_importar_partner_lafox" model="ir.actions.act_window">
+            <field name="name">Importar Clientes</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">ir.attachment</field>
+            <field name="view_mode">form</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="view_attachment_asignar_partner_form"/>
+            <field name="context">{}</field>
+            <field name="target">new</field>
+            <field name="help">La Fox</field>
+          </record>
+
+        <!-- HR_EMPLOYEE VISTA TREE-->
+        <record id="view_empleados_tree_lafox" model="ir.ui.view">
+            <field name="name">view.empleados.tree.lafox</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_tree"/>
+            <field name="arch" type="xml">
+                <data>
+                </data>
+            </field>
+        </record>
+
+        <!-- HR_EMPLOYEE VISTA FORM-->
+        <record id="view_empleados_form_lafox" model="ir.ui.view">
+            <field name="name">view.empleado.form.lafox</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <data>  
+                    <xpath expr="/form/sheet/div[@name='button_box']" position="attributes">
+                        <attribute name="invisible">1</attribute>
+                    </xpath> 
+                    <xpath expr="/form/sheet/notebook/page[@string='HR Settings']" position="attributes">
+                        <attribute name="invisible">1</attribute>
+                    </xpath>                
+                    <xpath expr='//field[@name="work_location"]' position="after">
+                        <field name="almacenes_id" domain="[('location_id','=', 11),('name','!=','VIRTUAL LOCATIONS / VENTAS')]"/>
+                        <field name="action_id" domain="[('help','=','La Fox')]"/>
+                    </xpath>
+                    <xpath expr='//field[@name="department_id"]' position="replace">
+                        <field name="departamento_user" domain="[('category_id.name','=', 'La Fox')]" options="{'no_create': True, 'no_open': True}" required='True'/>
+                    </xpath>
+                    <xpath expr='//field[@name="work_email"]' position="attributes">
+                        <attribute name="required">1</attribute>
+                    </xpath>
+                    <xpath expr='//field[@name="user_id"]' position="attributes">
+                        <attribute name="invisible">1</attribute>
+                    </xpath>
+                </data>
+            </field>
+        </record>
+
+        <!-- HR_EMPLOYEE VISTA KANBAN-->
+        <record id="view_empleados_kanban_lafox" model="ir.ui.view">
+            <field name="name">view.empleado.kanban.lafox</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.hr_kanban_view_employees"/>
+            <field name="arch" type="xml">
+                <data>                  
+                </data>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="lafox_rh_action_empleados">
+            <field name="name">Empleados</field>
+            <field name="res_model">hr.employee</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">kanban,form,tree</field>
+            <field name="domain">[]</field>
+            <field name="help">La Fox</field>
+        </record>
+        <record model="ir.actions.act_window.view" id="lafox_rh_action_empleados_form">
+            <field eval="3" name="sequence"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_empleados_form_lafox"/>
+            <field name="act_window_id" ref="lafox_rh_action_empleados"/>
+        </record>
+        <record model="ir.actions.act_window.view" id="lafox_rh_action_empleados_tree">
+            <field eval="2" name="sequence"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_empleados_tree_lafox"/>
+            <field name="act_window_id" ref="lafox_rh_action_empleados"/>
+        </record>
+        <record model="ir.actions.act_window.view" id="lafox_rh_action_empleados_kanban">
+            <field eval="1" name="sequence"/>
+            <field name="view_mode">kanban</field>
+            <field name="view_id" ref="view_empleados_kanban_lafox"/>
+            <field name="act_window_id" ref="lafox_rh_action_empleados"/>
+        </record>
+
+        <!--  HR_EMPLOYEE CVISAY TREE-->
+        <record id="view_empleados_tree_lafox" model="ir.ui.view">
+            <field name="name">view.empleados.tree.lafox</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_tree"/>
+            <field name="arch" type="xml">
+                <data>
+                </data>
+            </field>
+        </record>
+
+        <!-- VISTA CALENDAR PARA hr_asistencia_employee -->
+        <record id="view_lafox_asistencia_calendar" model="ir.ui.view">
+            <field name="name">view.lafox.asistencia.calendar</field>
+            <field name="model">hr.asistencia.employee</field>
+            <field name="arch" type="xml">
+                <calendar string="Asistencia Empleados" date_start="hora_display" date_stop="hora_display_fin"
+                             color="estatus" mode="week" quick_add="False">
+                    <field name="name" />
+                    <field name="estatus" />
+                    <field name="hora_inicio" invisible='True'/>
+                </calendar>
+            </field>
+        </record>
+
+        <!-- VISTA TREE PARA hr_asistencia_employee -->
+        <record id="view_lafox_asistencia_tree" model="ir.ui.view">
+            <field name="name">view.lafox.asistencia.tree</field>
+            <field name="model">hr.asistencia.employee</field>
+            <field name="arch" type="xml">
+                <tree string="Asistencia Empleados" create="0" edit="0">
+                    <field name="name" />
+                    <field name="hora_display" />
+                    <field name="hora_inicio" />
+                    <field name="estatus" />
+                </tree>
+            </field>
+        </record>
+
+        <!-- VISTA TREE PARA hr_asistencia_employee -->
+        <record id="view_lafox_asistencia_form" model="ir.ui.view">
+            <field name="name">view.lafox.asistencia.form</field>
+            <field name="model">hr.asistencia.employee</field>
+            <field name="arch" type="xml">
+                <form string="Asistencia Empleados" create="0" edit="0">
+                    <sheet>
+                        <group>
+                            <field name="name" readonly='True'/>
+                            <field name="hora_display" readonly='True'/>
+                            <field name="hora_display_fin" readonly='True'/>
+                            <field name="estatus" readonly='True'/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- ACTION PARA  hr_asistencia_employee-->
+        <record id="action_lafox_asistencia_calendar" model="ir.actions.act_window">
+            <field name="name">Asistencia de los Empleados</field>
+            <field name="res_model">hr.asistencia.employee</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">calendar,tree,form</field>
+            <field name="view_id" ref="view_lafox_asistencia_calendar" />
+            <!-- <field name="search_view_id" ref="view_lafox_asistencia_tree" /> -->
+            <field name="help">La Fox</field>
+        </record>
+
+        <!-- VISTA TREE PARA lafox.escala.de.descuentos -->
+        <record id="view_lafox_escala_descuetos_tree" model="ir.ui.view">
+            <field name="name">view.lafox.asistencia.tree</field>
+            <field name="model">lafox.escala.de.descuentos</field>
+            <field name="arch" type="xml">
+                <tree string="Escala de Descuentos" editable="bottom">
+                    <field name="escala" />
+                    <field name="descuentos" />
+                    <field name="factor" />
+                </tree>
+            </field>
+        </record>
+
+        <!-- VISTA TREE PARA lafox.escala.de.descuentos -->
+        <record id="view_lafox_escala_descuetos_form" model="ir.ui.view">
+            <field name="name">view.lafox.asistencia.form</field>
+            <field name="model">lafox.escala.de.descuentos</field>
+            <field name="arch" type="xml">
+                <form string="Escala de Descuentos" >
+                    <sheet>
+                        <group>
+                            <field name="escala"/>
+                            <field name="descuentos"/>
+                            <field name="factor"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- ACTION PARA  lafox.escala.de.descuentos-->
+        <record id="action_lafox_escala_descuetos" model="ir.actions.act_window">
+            <field name="name">Escala de Descuentos</field>
+            <field name="res_model">lafox.escala.de.descuentos</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_lafox_escala_descuetos_tree" />
+            <field name="help">La Fox</field>
+        </record>
+
+      
+ <!--MENUS LA FOX -->
+       <!-- NIVEL 1 CABECERA -->
+        <menuitem id="main_config_menu" name="Configuracion La Fox"/>
+        	<!-- NIVEL 2 ENCABEZADOS -->
+          <menuitem id="menu_config_rh" name="Recursos Humanos" parent="main_config_menu" sequence="1"/>
+            <menuitem id="menu_desc_ventas" name="Descuentos para Ventas" parent="main_config_menu" sequence="2"/>
+        	<menuitem id="menu_config" name="Carga de Layout" parent="main_config_menu" sequence="3"/>
+        		<!-- NIVEL 3 MENUS ACCIONES -->
+              <menuitem action="lafox_rh_action_empleados" id="submenu_employee" parent="menu_config_rh" name="Empleados" sequence="1"/>
+              <menuitem action="action_lafox_asistencia_calendar" id="submenu_employee_asisstence" parent="menu_config_rh" name="Asistencia" sequence="2"/>
+
+            	<menuitem action="action_importar_productos_lafox" id="submenu_confg" parent="menu_config" name="Carga Masiva de Productos" sequence="1"/>
+                <menuitem action="action_importar_partner_lafox" id="submenu_confg_2" parent="menu_config" name="Carga Masiva de Clientes" sequence="2"/>
+            	
+
+                <menuitem action="action_lafox_escala_descuetos" id="submenu_descuetos" parent="menu_desc_ventas" name="Descuentos" sequence="2"/>
+
+    </data>
+</openerp>

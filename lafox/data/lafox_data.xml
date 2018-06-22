@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="False">
+    	<record id="location_sell_virtual" model="stock.location">
+            <field name="name">VIRTUAL LOCATIONS / VENTAS</field>
+            <field name="location_id">11</field>
+        </record>
+        <record id="location_terminado_virtual" model="stock.location">
+            <field name="name">LOCAL PRODUCTOS TERMINADO</field>
+            <field name="location_id">11</field>
+        </record>
+        <record id="location_accesorios_virtual" model="stock.location">
+            <field name="name">LOCAL PRODUCTOS ACCESORIOS</field>
+            <field name="location_id">11</field>
+        </record>
+
+        <record id="cron_can_view_corte_z" model="lafox.valida.estatus.boton">
+            <field name="estatus"></field>
+            <field name="fecha"></field>
+        </record>
+
+   	</data>
+</openerp>
